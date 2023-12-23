@@ -1,50 +1,28 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="tw-bg-primary-500 tw-sticky tw-top-0 tw-z-44">
-    <div class="tw-relative tw-py-4 tw-px-6">
+    <div class="tw-relative tw-py-6 tw-px-6">
       <div
-        class="tw-flex tw-items-center tw-justify-between overflow-auto sm:tw-whitespace-nowrap"
+        class="tw-flex tw-items-center tw-gap-4 tw-justify-end overflow-auto sm:tw-whitespace-nowrap"
       >
-        <div class="tw-flex tw-items-center tw-justify-between tw-w-full">
-          <div
-            class="tw-font-semibold sm:tw-text-xs lg:tw-text-base sm:tw-mr-3 lg:tw-mr-0 tw-capitalize"
-          >
-            <span class="tw-uppercase">
-              {{ $route.meta.parent.split("-")[0] }}
-              <span class="tw-text-dark-100"> - </span>
-            </span>
-            <span class="tw-capitalize">
-              {{ start_case($route.meta.name) }}</span
-            >
-          </div>
-        </div>
-        <div class="tw-flex tw-items-center tw-gap-5" >
-
-          <span class="tw-flex tw-flex-col tw-items-end">
-            <span class="text-capitalize tw-text-[14px] tw-font-semibold"> SamzugaGPT </span>
-            <div class="tw-text-white">
-              <span
-                @click="logout"
-                role="button"
-                class="menu-item-link tw-text-semibold tw-block tw-rounded-lg tw-text-[13px] tw-text-red-500"
-              >
-                <div class="tw-flex tw-items-center tw-gap-1">
-                  <i-icon
-                    icon="material-symbols:logout"
-                    class="menu-item-icon"
-                    width="16px"
-                  />
-                  <span class="tw-flex tw-flex-col">
-                    <span> Logout </span>
-                  </span>
-                </div>
-              </span>
-            </div>
-          </span>
-          <span role="button" @click="drawer = !drawer">
-              <i-icon icon="grommet-icons:menu" width="25px" />
-            </span>
-        </div>
+        <span
+          ><i-icon
+            icon="icon-park-solid:message-one"
+            class="tw-text-xl tw-text-white"
+        /></span>
+        <span>
+          <i-icon
+            icon="ic:round-notification-important"
+            class="tw-text-xl tw-text-white"
+          />
+        </span>
+        <span>
+          <img
+          style="height:35px; width:35px; object-fit: cover; object-position: top; border-radius: 50%;"
+            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww"
+            alt=""
+          />
+        </span>
       </div>
     </div>
 
@@ -55,29 +33,31 @@
         direction="rtl"
         size="80%"
       >
-      <div class="tw-h-full tw-bg-primary">
-        <div class="tw-flex tw-p-8 tw-justify-end tw-mb-8 tw-bg-dark-400 tw-shadow">
-          <span @click="drawer = !drawer" role="button">
-            <i-icon icon="codicon:close" class="tw-text-white" width="25px" />
-          </span>
+        <div class="tw-h-full tw-bg-primary">
+          <div
+            class="tw-flex tw-p-8 tw-justify-end tw-mb-8 tw-bg-dark-400 tw-shadow"
+          >
+            <span @click="drawer = !drawer" role="button">
+              <i-icon icon="codicon:close" class="tw-text-white" width="25px" />
+            </span>
+          </div>
+          <ul class="tw-p-0 tw-flex tw-flex-col tw-space-y-3">
+            <li class="" v-for="item in menu" :key="item?.id">
+              <router-link
+                :class="[
+                  item.parent === routeParent
+                    ? 'tw-bg-white tw-text-dark-300'
+                    : 'tw-text-white',
+                ]"
+                class="tw-px-8 tw-flex tw-gap-3 tw-items-center tw-py-4 tw-text-[13px] tw-uppercase tw-block tw-no-underline tw-font-normal tw-tracking-widest"
+                :to="item?.url"
+              >
+                <i-icon :icon="item?.icon" class="tw-text-lg" />
+                <span>{{ item?.title }}</span></router-link
+              >
+            </li>
+          </ul>
         </div>
-        <ul class="tw-p-0 tw-flex tw-flex-col tw-space-y-3">
-          <li class="" v-for="item in menu" :key="item?.id">
-            <router-link
-            :class="[
-                item.parent === routeParent
-                  ? 'tw-bg-white tw-text-dark-300'
-                  : 'tw-text-white',
-              ]"
-              class="tw-px-8 tw-flex tw-gap-3 tw-items-center tw-py-4 tw-text-[13px] tw-uppercase tw-block tw-no-underline tw-font-normal tw-tracking-widest"
-              :to="item?.url"
-            >
-              <i-icon :icon="item?.icon" class="tw-text-lg" />
-              <span>{{ item?.title }}</span></router-link
-            >
-          </li>
-        </ul>
-      </div>
       </el-drawer>
     </div>
   </div>
@@ -93,14 +73,14 @@ export default {
     },
     menu: {
       type: Array,
-      default: () => []    
-    }
+      default: () => [],
+    },
   },
 
-  data(){
+  data() {
     return {
-      drawer: false
-    }
+      drawer: false,
+    };
   },
 
   methods: {
